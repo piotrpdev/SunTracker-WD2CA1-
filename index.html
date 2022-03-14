@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8" />
+  </head>
+
+  <body>
+    <div class="ui middle aligned center aligned grid">
+      <main class="ui segment piled column">
+        <div id="loader" class="ui active inverted dimmer">
+          <div class="ui text loader">
+            Updating to Windows Vista...
+          </div>
+        </div>
+        <canvas id="canvas" width="800" height="300"></canvas>
+        <h1>
+          Sun Tracker&trade;
+        </h1>
+        <p>
+          <i>*Not to scale, geocentric model used for illustrative purposes.</i>
+        </p>
+        <br />
+        <div>
+          <form id="chooseLocation" class="ui form">
+            <div class="inline field">
+              <label class="two wide field">Location</label>
+              <div class="ui eight wide field selection dropdown">
+                <i class="dropdown icon"></i>
+                <div class="text">
+                  <img class="ui avatar image" src="/assets/img/flags/ireland.png" />
+                  Waterford (Ireland)
+                </div>
+                <div class="menu">
+                  <div class="active item" data-value="52.2593, -7.1101">
+                    <img class="ui avatar image" src="/assets/img/flags/ireland.png" />
+                    Waterford (Ireland)
+                  </div>
+                  <div class="item" data-value="51.5072, -0.1276">
+                    <img class="ui avatar image" src="/assets/img/flags/uk.png" />
+                    London (United Kingdom)
+                  </div>
+                  <div class="item" data-value="38.9072, -77.0369">
+                    <img class="ui avatar image" src="/assets/img/flags/usa.png" />
+                    Washington D.C. (North America)
+                  </div>
+                  <div class="item" data-value="-15.7975, -47.8919">
+                    <img class="ui avatar image" src="/assets/img/flags/brazil.png" />
+                    Brasília (South America)
+                  </div>
+                  <div class="item" data-value="28.6139, 77.2090">
+                    <img class="ui avatar image" src="/assets/img/flags/india.png" />
+                    New Dehli (India)
+                  </div>
+                  <div class="item" data-value="5.6037, -0.1870">
+                    <img class="ui avatar image" src="/assets/img/flags/ghana.png" />
+                    Accra (Ghana)
+                  </div>
+                  <div class="item" data-value="-37.840935, 144.946457">
+                    <img
+                      class="ui avatar image"
+                      src="/assets/img/flags/australia.png"
+                    />
+                    Melbourne (Australia)
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <br />
+        <p id="time"></p>
+        <div id="location">
+          <p id="latitude"></p>
+          <p id="longitude"></p>
+        </div>
+        <p id="altitude"></p>
+        <p id="azimuth"></p>
+        <p id="sunrise"></p>
+        <p id="sunset"></p>
+      </main>
+    </div>
+
+    <script
+      src="https://code.jquery.com/jquery-3.4.1.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
+      integrity="sha256-UXesixbeLkB/UYxVTzuj/gg3+LMzgwAmg3zD+C4ZASQ="
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"
+      integrity="sha256-CgSoWC9w5wNmI1aN8dIMK+6DPelUEtvDr+Bc2m/0Nx8="
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/suncalc@1.9.0/suncalc.min.js"></script>
+    <script type="module" src="assets/js/main.mjs"></script>
+  </body>
+</html>

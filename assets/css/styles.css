@@ -1,0 +1,29 @@
+body {
+  background-color: indianred !important;
+}
+
+.ui.piled.segment:after,
+.ui.piled.segment:before,
+.ui.piled.segments:after,
+.ui.piled.segments:before {
+  background-color: antiquewhite !important;
+}
+
+main {
+  width: fit-content !important;
+  background-color: antiquewhite !important;
+}
+
+canvas {
+  border-radius: 6px;
+  margin: 10px;
+}
+
+/* Fixes centering issue */
+body > .grid {
+  height: 100%;
+}
+
+div#location {
+  margin: 0 0 1em !important;
+}
