@@ -4,10 +4,10 @@
 // ? Hugely inspired by https://www.suncalc.org/
 
 // Used to get estimated timezone base on coords.
-// Have to use skypack and import here since browser version isn't provided
+// Have to use skypack and import here since there is no browser version
 import ts from 'https://cdn.skypack.dev/@mapbox/timespace';
 
-import { generateStars, promisifyLoad, formatDate as _formatDate } from './helpers.mjs';
+import { generateStars, promisifyLoad, formatDate as _formatDate, updateInfoElements } from './helpers.mjs';
 
 // info vars declaration
 let curTime;
@@ -15,6 +15,7 @@ let curTime;
 let coordArr = ["52.2593", "-7.1101"];
 let adjTime;
 let times;
+let irishTime = true;
 let curPos;
 let alt;
 let azm;
@@ -81,19 +82,23 @@ function draw() {
 
   // Sun
   let angle;
+  // If azimuth is less than 180 the sun is rising (simplification)
+  // so draw it on the left side of the arc.
   if (azm < 180) {
     angle = Math.PI + curPos.altitude;
   } else {
     angle = 2 * Math.PI - curPos.altitude;
   }
+
   const cx = width / 2 - sunSize / 2;
   const cy = height - sunSize / 2 + earthHeightMod;
   const r = height + earthHeightMod - sunSize / 2;
 
-  // https://stackoverflow.com/a/61673153/10253214
+  // ? How to create a circle https://stackoverflow.com/a/61673153/10253214
   const sunX = cx + r * Math.cos(angle);
   const sunY = cy + r * Math.sin(angle);
 
+  // Rotate (Annoying to do)
   // const time = new Date();
   // ctx.translate(sunX + sunSize / 2, sunY + sunSize / 2);
   // ctx.rotate(
@@ -130,10 +135,10 @@ function draw() {
 function generateInfo(coords) {
   curTime = new Date();
 
+  // Artificially manipulate time
   //const curTime = new Date();
   //curTime.setHours(3);
 
-  // Waterford coords
   coordArr = coords ?? coordArr;
 
   // This function take long lat instead of lat long for some reason.
@@ -152,34 +157,24 @@ function generateInfo(coords) {
  * Changes the information in the actual HTML doc.
  */
 function updateInfo() {
-  document.getElementById(
-    "time"
-  ).innerHTML = `<b>Current Time:</b><br>${curTime.toLocaleString()} (Europe/Dublin)<br>${formatDate(
-    adjTime.toDate()
-  )}`;
-  document.getElementById(
-    "latitude"
-  ).innerHTML = `<b>Latitude:</b> ${coordArr[0]}&deg;`;
-  document.getElementById(
-    "longitude"
-  ).innerHTML = `<b>Longitude</b>: ${coordArr[1]}&deg;`;
+  const info =
+  {
+    "time": irishTime ? `${curTime.toLocaleString()} (Europe/Dublin)` : `${formatDate(
+      adjTime.toDate()
+    )}`,
+    "latitude": `${coordArr[0]}&deg;`,
+    "longitude": `${coordArr[1]}&deg;`,
+    "altitude": `${alt}&deg;`,
+    "azimuth": `${azm}&deg;`,
+    "sunrise": irishTime ? `${times.sunrise.toLocaleString()} (Europe/Dublin)` : `${formatDate(
+      times.sunrise
+    )}`,
+    "sunset": irishTime ? `${times.sunset.toLocaleString()} (Europe/Dublin)` : `${formatDate(
+      times.sunset
+    )}`
+  };
 
-  document.getElementById(
-    "altitude"
-  ).innerHTML = `<b>Altitude:</b><br>${alt}&deg;`;
-  document.getElementById(
-    "azimuth"
-  ).innerHTML = `<b>Azimuth (North to East)</b>:<br>${azm}&deg;`;
-  document.getElementById(
-    "sunrise"
-  ).innerHTML = `<b>Sunrise:</b><br>${times.sunrise.toLocaleString()} (Europe/Dublin)<br>${formatDate(
-    times.sunrise
-  )}`;
-  document.getElementById(
-    "sunset"
-  ).innerHTML = `<b>Sunset:</b><br>${times.sunset.toLocaleString()} (Europe/Dublin)<br>${formatDate(
-    times.sunset
-  )}`;
+  updateInfoElements(info);
 }
 
 /**
@@ -228,8 +223,34 @@ $(".ui.dropdown").dropdown({
   }
 });
 
+// Display loading bar on refresh
+// ? https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onbeforeunload#example
 window.addEventListener("beforeunload", function (e) {
   document.getElementById("loader").style.display = "flex";
-  // the absence of a returnValue property on the event will guarantee the browser unload happens
+  
   delete e["returnValue"];
 });
+
+// Regenerate stars on button click
+document.getElementById('regStars').addEventListener('click', () => {
+  stars = generateStars(starsNum, width, height);
+  updateCanvas();
+  // Have to use jQuery here for transition.
+  $('#regStars').transition('pulse');
+})
+
+// Change between Irish and Local time on switch toggle
+document.getElementById('timeType').addEventListener('click', (e) => {
+  let text = e.target.nextElementSibling.innerText;
+
+  if (text === 'Irish Time') {
+    text = 'Local Time';
+    irishTime = false;
+  } else {
+    text = 'Irish Time';
+    irishTime = true;
+  }
+
+  e.target.nextElementSibling.innerText = text;
+  updateInfo();
+})

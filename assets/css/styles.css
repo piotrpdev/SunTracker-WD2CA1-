@@ -16,7 +16,6 @@ main {
 
 canvas {
   border-radius: 6px;
-  margin: 10px;
 }
 
 /* Fixes centering issue */
@@ -26,4 +25,31 @@ body > .grid {
 
 div#location {
   margin: 0 0 1em !important;
+}
+
+#canvasHolder {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 10px;
+}
+
+#canvasHolder > button {
+  margin: 5px 10px 0 0;
+}
+
+#tableHolder {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  margin: 20px auto;
+
+  text-align-last: center;
+}
+
+.ui.table tr:first-child th {
+  border-top: none;
+}
+.ui.table tr th {
+  border-top: 1px solid rgba(34,36,38,.1);
 }

@@ -47,4 +47,16 @@ export function generateStars(num, width, height) {
  * @param {string} zone The zone
  */
 export const formatDate = (date, zone) =>
- `${date.toLocaleString("en-IE", { timeZone: zone })} (${zone})`;
+  `${date.toLocaleString("en-IE", { timeZone: zone })} (${zone.replace('_', ' ')})`;
+
+/**
+ * Updates elements based on the id and content passed in object.
+ * @param {Record<string, string>} info Object with id and content
+ */
+export function updateInfoElements(info) {
+  for (const [id, content] of Object.entries(info)) {
+    document.getElementById(
+      id
+    ).innerHTML = content;
+  }
+}

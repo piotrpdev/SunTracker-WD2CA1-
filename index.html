@@ -1,8 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Parcel Sandbox</title>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="assets/img/sun.png">
+    <title>Sun Tracker&trade;</title>
   </head>
 
   <body>
@@ -13,7 +16,13 @@
             Updating to Windows Vista...
           </div>
         </div>
-        <canvas id="canvas" width="800" height="300"></canvas>
+        <div id="canvasHolder">
+          <canvas id="canvas" width="800" height="300"></canvas>
+          <button class="ui compact black labeled icon button" id="regStars" type="button">
+            <i class="redo icon"></i>
+            Regenerate Stars
+          </button>
+        </div>
         <h1>
           Sun Tracker&trade;
         </h1>
@@ -68,16 +77,51 @@
             </div>
           </form>
         </div>
-        <br />
-        <p id="time"></p>
-        <div id="location">
-          <p id="latitude"></p>
-          <p id="longitude"></p>
+
+        <div id="tableHolder">
+          <table class="ui striped celled table">
+            <tr>
+              <th>Time in Country</th>
+              <td>
+                <div class="ui toggle checkbox">
+                  <input id="timeType" type="checkbox">
+                  <label>Irish Time</label>
+                </div>
+              </td>
+            </tr>
+              <tr>
+                <th>Current Time</th>
+                <td id="time"></td>
+              </tr>
+              <tr>
+                <th>Latitude</th>
+                <td id="latitude"></td>
+              </tr>
+              <tr>
+                <th>Longitude</th>
+                <td id="longitude"></td>
+              </tr>
+              <tr>
+                <th>Altitude</th>
+                <td id="altitude"></td>
+              </tr>
+              <tr>
+                <th>Azimuth (North to East)</th>
+                <td id="azimuth"></td>
+              </tr>
+              <tr>
+                <th>Sunrise</th>
+                <td id="sunrise"></td>
+              </tr>
+              <tr>
+                <th>Sunset</th>
+                <td id="sunset"></td>
+              </tr>
+          </table>
+          <p>
+            <i><a href="https://en.wikipedia.org/wiki/Azimuth#/media/File:Azimuth-Altitude_schematic.svg" target="_blank">What do these measurements mean?</a></i>
+          </p>
         </div>
-        <p id="altitude"></p>
-        <p id="azimuth"></p>
-        <p id="sunrise"></p>
-        <p id="sunset"></p>
       </main>
     </div>
 
