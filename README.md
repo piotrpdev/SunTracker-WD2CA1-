@@ -1,13 +1,15 @@
 # Sun Tracker
 
-## ToDo
+Kubernetes version of the Sun Tracker website.
 
-- [ ] Coord Input
-- [x] Dropdown with common locations
-- [x] Better Styling
-- [x] Auto-update every x seconds
-- [x] Loading indicator
-- [x] Button to regenerate stars
+# Build
 
-Flags from [here.](https://www.countries-ofthe-world.com/flags-of-the-world.html)
-Loading message from [here.](https://gist.github.com/meain/6440b706a97d2dd71574769517e7ed32)
+```
+docker build -t suntracker:v1 .
+```
+
+## Credit
+
+- [k8s using kind](https://www.baeldung.com/ops/kubernetes-kind)
+- [docker and nginx](https://www.dailysmarty.com/posts/steps-for-deploying-a-static-html-site-with-docker-and-nginx)
+- [nginx mime type issue fix](https://github.com/storybookjs/storybook/issues/20157#issuecomment-1464901423)

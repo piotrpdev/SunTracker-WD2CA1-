@@ -1,0 +1,38 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: suntracker-app
+  labels:
+    app: suntracker-app
+spec:
+  containers:
+  - name: suntracker-app
+    image: piotrpdev/suntracker_nginx:v3
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: suntracker-service
+spec:
+  selector:
+    app: suntracker-app
+  ports:
+  # Default port used by the image
+  - port: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: suntracker-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: "/suntracker"
+        backend:
+          service:
+            name: suntracker-service
+            port:
+              number: 80
+---
