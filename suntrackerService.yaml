@@ -1,38 +1,53 @@
-kind: Pod
-apiVersion: v1
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: suntracker-app
+  name: suntracker-deployment
   labels:
-    app: suntracker-app
+    app: suntracker
 spec:
-  containers:
-  - name: suntracker-app
-    image: piotrpdev/suntracker_nginx:v3
+  replicas: 1
+  selector:
+    matchLabels:
+      app: suntracker
+  template:
+    metadata:
+      labels:
+        app: suntracker
+    spec:
+      containers:
+        - name: suntracker
+          image: piotrpdev/suntracker_nginx:v3
+          ports:
+            - containerPort: 80
 ---
 kind: Service
 apiVersion: v1
 metadata:
   name: suntracker-service
 spec:
-  selector:
-    app: suntracker-app
   ports:
-  # Default port used by the image
-  - port: 80
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: suntracker
+  type: ClusterIP
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
   name: suntracker-ingress
 spec:
   rules:
-  - http:
-      paths:
-      - pathType: Prefix
-        path: "/suntracker"
-        backend:
-          service:
-            name: suntracker-service
-            port:
-              number: 80
+    - http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: suntracker-service
+                port:
+                  number: 80
 ---
