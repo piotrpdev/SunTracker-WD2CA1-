@@ -2,7 +2,16 @@
 
 Kubernetes version of the Sun Tracker website.
 
-# Build
+## Usage
+
+> Note: You need [kind](https://kind.sigs.k8s.io/) to run this.
+
+```
+chmod +x ./kind_start.sh
+./kind_start.sh
+```
+
+## Build
 
 ```
 docker build -t suntracker:v1 .
